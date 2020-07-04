@@ -22,6 +22,7 @@ import LocalConvenienceStoreIcon from '@material-ui/icons/LocalConvenienceStore'
 
 import Instruction from '../pages/Instruction';
 import BuildingList from '../pages/facilities/BuildingList';
+import Login from '../pages/Login';
 
 const drawerWidth = 240;
 
@@ -44,8 +45,8 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
         flexGrow: 1,
-        padding: theme.spacing(3),
-        marginTop: 64
+        padding: theme.spacing(1),
+        marginTop: theme.spacing(8)
     },
     nested: {
         paddingLeft: theme.spacing(4),
@@ -57,6 +58,10 @@ const routes = [
         path: "/",
         exact: true,
         component: Instruction
+    },
+    {
+        path: "/login",
+        component: Login
     },
     {
         path: "/facilities/buildinglist",
