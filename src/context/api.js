@@ -63,7 +63,7 @@ export default class Api {
         if (response.status === 401) {
             return "test2";
         } else {
-            return JSON.parse(response.json());
+            return response.json();
         }
     }
 }

@@ -6,14 +6,18 @@ import {
     ListItemText,
     AppBar,
     Tabs,
-    Tab} from '@material-ui/core';
+    Tab,
+    Typography
+} from '@material-ui/core';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 
 import SwipeableViews from 'react-swipeable-views';
 
 import API from './../../context/api';
+import GoogleMapReact from 'google-map-react';
+
+import Marker from './../../components/Marker';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -35,6 +39,13 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(0),
         width: '50%',
         minWidth: '0'
+    },
+    fullHeight: {
+        paddingBottom: theme.spacing(8),
+        height: '100vh'
+    },
+    fullContainer: {
+        height: '100%'
     }
 }));
 
@@ -63,16 +74,33 @@ function a11yProps(index) {
     };
 }
 
+function getBuilding(buildingList, index) {
+    return buildingList[index];
+}
+
 export default function BuildingList() {
     const classes = useStyles();
     const theme = useTheme();
     const [tabPanelIndex, setTabPanelIndex] = React.useState(0);
     const [selectedIndex, setSelectedIndex] = React.useState(1);
-    const [buildingList, setBuildingList] = useState();
+    const [buildingList, setBuildingList] = useState([]);
+    const [loyolaBuildingList, setLoyolaBuildingList] = useState([]);
+    const [selectedBuildingIndex, setSelectedBuildingIndex] = useState(0);
 
-    const handleListItemClick = (event, index) => {
-        setSelectedIndex(index);
-    };
+    // maps
+    const [center, setCenter] = useState([45.495376, -73.577997]);
+    const [zoom, setZoom] = useState(15);
+    const [selectedBuilding, setSelectedBuilding] = useState();
+
+    const handleBuildingClick = (event, index) => {
+        setSelectedBuildingIndex(index);
+        if (tabPanelIndex === 0) {
+            // webster
+            let building = getBuilding(buildingList, selectedBuildingIndex);
+            setSelectedBuilding(building);
+            setCenter([Number(building.Latitude), Number(building.Longitude)]);
+        }
+    }
 
     const handleChange = (event, newValue) => {
         setTabPanelIndex(newValue);
@@ -82,22 +110,46 @@ export default function BuildingList() {
         setTabPanelIndex(index);
     };
 
-    const fetchData = async() => {
-        const data = await API.facilities_buildinglist();
-        setBuildingList(data);
-    }
+    const handleApiLoaded = (map, maps) => {
+        
+    };
 
     useEffect(() => {
-        fetchData();
-    })
+        API.facilities_buildinglist().then((buildings) => {
+            let loyolaBuildings = buildings.filter(function (item) {
+                return item.Campus === "LOY";
+            });
+
+            let websterBuildings = buildings.filter(function (item) {
+                return item.Campus === "SGW";
+            });
+
+            setLoyolaBuildingList(loyolaBuildings);
+            setBuildingList(websterBuildings);
+        });
+    }, [])
 
     return (
         <div>
-            <Grid container spacing={1}>
-                <Grid item xs={8}>
-                    <Paper className={classes.paper}>xs=8</Paper>
+            <Grid container spacing={1} className={classes.fullHeight}>
+                <Grid item xs={8} className={classes.fullContainer}>
+                    <GoogleMapReact
+                        defaultCenter={[45.495376, -73.577997]}
+                        center={center}
+                        zoom={zoom}
+                        yesIWantToUseGoogleMapApiInternals={true}
+                        onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
+                    >
+                        {selectedBuilding &&
+                            <Marker
+                                text={selectedBuilding.Building_Long_Name}
+                                lat={selectedBuilding.Latitude}
+                                lng={selectedBuilding.Longitude}
+                            />
+                        }
+                    </GoogleMapReact>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={4} style={{ maxHeight: '100%', overflow: 'auto' }}>
                     <AppBar position="static" color="default">
                         <Tabs
                             value={tabPanelIndex}
@@ -115,18 +167,43 @@ export default function BuildingList() {
                         onChangeIndex={handleChangeIndex}
                     >
                         <TabPanel value={tabPanelIndex} index={0} dir={theme.direction}>
-                            <List component="nav">
-                                <ListItem
-                                    button
-                                    selected={selectedIndex === 0}
-                                    onClick={(event) => handleListItemClick(event, 0)}
-                                >
-                                    <ListItemText primary={buildingList} />
-                                </ListItem>
+                            <List component="nav" height="50%">
+                                {buildingList.map((building, index) => (
+                                    <ListItem
+                                        key={index}
+                                        button
+                                        selected={selectedBuildingIndex === index}
+                                        onClick={(event) => handleBuildingClick(event, index)}
+                                    >
+                                        <ListItemText primary={building.Building_Name}
+                                            secondary={
+                                                <React.Fragment>
+                                                    <Typography component="span"
+                                                        variant="body2"
+                                                        color="textSecondary">{building.Building_Long_Name}</Typography>
+                                                    <br />
+                                                    <Typography component="span"
+                                                        variant="body2"
+                                                        color="textSecondary">{building.Address}</Typography>
+                                                </React.Fragment>
+                                            } />
+                                    </ListItem>
+                                ))}
                             </List>
                         </TabPanel>
                         <TabPanel value={tabPanelIndex} index={1} dir={theme.direction}>
-                            Item Two
+                            <List component="nav">
+                                {loyolaBuildingList.map((building, index) => (
+                                    <ListItem
+                                        key={index}
+                                        button
+                                        selected={selectedBuildingIndex === index}
+                                        onClick={(event) => handleBuildingClick(event, index)}
+                                    >
+                                        <ListItemText primary={building.Building_Long_Name} />
+                                    </ListItem>
+                                ))}
+                            </List>
                         </TabPanel>
                     </SwipeableViews>
                 </Grid>
