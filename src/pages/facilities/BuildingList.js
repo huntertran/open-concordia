@@ -7,7 +7,10 @@ import {
     AppBar,
     Tabs,
     Tab,
-    Typography
+    Typography,
+    ListItemSecondaryAction,
+    IconButton,
+    Tooltip
 } from '@material-ui/core';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -18,6 +21,8 @@ import API from './../../context/api';
 import GoogleMapReact from 'google-map-react';
 
 import Marker from './../../components/Marker';
+
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -82,24 +87,28 @@ export default function BuildingList() {
     const classes = useStyles();
     const theme = useTheme();
     const [tabPanelIndex, setTabPanelIndex] = React.useState(0);
-    const [selectedIndex, setSelectedIndex] = React.useState(1);
     const [buildingList, setBuildingList] = useState([]);
     const [loyolaBuildingList, setLoyolaBuildingList] = useState([]);
     const [selectedBuildingIndex, setSelectedBuildingIndex] = useState(0);
 
     // maps
     const [center, setCenter] = useState([45.495376, -73.577997]);
-    const [zoom, setZoom] = useState(15);
     const [selectedBuilding, setSelectedBuilding] = useState();
 
     const handleBuildingClick = (event, index) => {
         setSelectedBuildingIndex(index);
+
+        let building = {};
+
         if (tabPanelIndex === 0) {
             // webster
-            let building = getBuilding(buildingList, selectedBuildingIndex);
-            setSelectedBuilding(building);
-            setCenter([Number(building.Latitude), Number(building.Longitude)]);
+            building = getBuilding(buildingList, selectedBuildingIndex);
+        } else {
+            building = getBuilding(loyolaBuildingList, selectedBuildingIndex);
         }
+
+        setSelectedBuilding(building);
+        setCenter([Number(building.Latitude), Number(building.Longitude)]);
     }
 
     const handleChange = (event, newValue) => {
@@ -110,9 +119,9 @@ export default function BuildingList() {
         setTabPanelIndex(index);
     };
 
-    const handleApiLoaded = (map, maps) => {
-        
-    };
+    const openInGoogleMapOnClick = (address) => {
+        window.open("https://www.google.com/maps/search/?api=1&query=" + address);
+    }
 
     useEffect(() => {
         API.facilities_buildinglist().then((buildings) => {
@@ -136,9 +145,8 @@ export default function BuildingList() {
                     <GoogleMapReact
                         defaultCenter={[45.495376, -73.577997]}
                         center={center}
-                        zoom={zoom}
+                        zoom={15}
                         yesIWantToUseGoogleMapApiInternals={true}
-                        onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
                     >
                         {selectedBuilding &&
                             <Marker
@@ -167,7 +175,7 @@ export default function BuildingList() {
                         onChangeIndex={handleChangeIndex}
                     >
                         <TabPanel value={tabPanelIndex} index={0} dir={theme.direction}>
-                            <List component="nav" height="50%">
+                            <List component="nav">
                                 {buildingList.map((building, index) => (
                                     <ListItem
                                         key={index}
@@ -187,6 +195,13 @@ export default function BuildingList() {
                                                         color="textSecondary">{building.Address}</Typography>
                                                 </React.Fragment>
                                             } />
+                                        <ListItemSecondaryAction>
+                                            <Tooltip title="Open in Google Map">
+                                                <IconButton onClick={() => openInGoogleMapOnClick(building.Address)}>
+                                                    <ExitToAppIcon />
+                                                </IconButton>
+                                            </Tooltip>
+                                        </ListItemSecondaryAction>
                                     </ListItem>
                                 ))}
                             </List>
@@ -200,7 +215,25 @@ export default function BuildingList() {
                                         selected={selectedBuildingIndex === index}
                                         onClick={(event) => handleBuildingClick(event, index)}
                                     >
-                                        <ListItemText primary={building.Building_Long_Name} />
+                                        <ListItemText primary={building.Building_Name}
+                                            secondary={
+                                                <React.Fragment>
+                                                    <Typography component="span"
+                                                        variant="body2"
+                                                        color="textSecondary">{building.Building_Long_Name}</Typography>
+                                                    <br />
+                                                    <Typography component="span"
+                                                        variant="body2"
+                                                        color="textSecondary">{building.Address}</Typography>
+                                                </React.Fragment>
+                                            } />
+                                        <ListItemSecondaryAction>
+                                            <Tooltip title="Open in Google Map">
+                                                <IconButton onClick={() => openInGoogleMapOnClick(building.Address)}>
+                                                    <ExitToAppIcon />
+                                                </IconButton>
+                                            </Tooltip>
+                                        </ListItemSecondaryAction>
                                     </ListItem>
                                 ))}
                             </List>
