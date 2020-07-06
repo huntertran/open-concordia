@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -71,14 +71,25 @@ const routes = [
 
 export default function Dashboard() {
     const classes = useStyles();
+
     const [facilitiesOpen, setFacilitiesOpen] = React.useState(true);
 
     const handleFacilitiesClick = () => {
         setFacilitiesOpen(!facilitiesOpen);
     };
 
+    const [baseName, setBaseName] = useState("");
+
+    useEffect(() => {
+        if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+            setBaseName("");
+        } else {
+            setBaseName("/open-concordia");
+        }
+    }, [baseName])
+
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={baseName}>
             <div className={classes.root}>
                 <CssBaseline />
                 <AppBar position="fixed" className={classes.appBar}>
