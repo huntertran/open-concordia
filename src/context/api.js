@@ -1,5 +1,5 @@
 export default class Api {
-    static API_BASE_URL = "https://opendata.concordia.ca/API/v1/";
+    static API_BASE_URL = "https://opendata.concordia.ca/API/v1";
     static username = "";
     static key = "";
 
@@ -19,12 +19,6 @@ export default class Api {
         });
 
         return response;
-
-        // if (response.status === 401) {
-        //     window.history.go("/login");
-        // } else {
-        //     return response;
-        // }
     }
 
     static getExistingCredential() {
@@ -39,7 +33,7 @@ export default class Api {
     };
 
     static async checkCredential() {
-        let response = await this.authenticatedFetch("course/catalog/filter/BIOL/200/UGRD");
+        let response = await this.authenticatedFetch("/course/catalog/filter/BIOL/200/UGRD");
         this.isAuthorized = true;
         return response.ok;
     }
@@ -58,7 +52,34 @@ export default class Api {
     }
 
     static async facilities_buildinglist() {
-        let response = await this.authenticatedFetch("facilities/buildinglist/");
+        let response = await this.authenticatedFetch("/facilities/buildinglist/");
+
+        if (response.status === 401) {
+            return "test2";
+        } else {
+            return response.json();
+        }
+    }
+
+    static async facilities_pointlist() {
+        let response = await this.authenticatedFetch("/facilities/pointlist/");
+
+        if (response.status === 401) {
+            return "test2";
+        } else {
+            return response.json();
+        }
+    }
+
+    static async facilities_environmental(from, to) {
+        // /facilities/environmental/filter/2019-3-15 00:00:00/2019-3-16 00:00:00
+        // YYYY-MM-DD HH:MM:SS
+
+        let query = "/facilities/environmental/filter/"
+            + from + " 00:00:00/"
+            + to + " 00:00:00";
+
+        let response = await this.authenticatedFetch(query);
 
         if (response.status === 401) {
             return "test2";

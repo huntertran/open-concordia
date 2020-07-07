@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -19,10 +19,12 @@ import ApartmentIcon from '@material-ui/icons/Apartment';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import LocalConvenienceStoreIcon from '@material-ui/icons/LocalConvenienceStore';
+import MemoryIcon from '@material-ui/icons/Memory';
 
 import Instruction from '../pages/Instruction';
 import BuildingList from '../pages/facilities/BuildingList';
 import Login from '../pages/Login';
+import Sensors from '../pages/facilities/Sensors';
 
 const drawerWidth = 240;
 
@@ -44,9 +46,10 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'auto',
     },
     content: {
-        flexGrow: 1,
+        width: 'calc(100vw - 240px)',
         padding: theme.spacing(1),
-        marginTop: theme.spacing(8)
+        marginTop: theme.spacing(8),
+        height: 'calc(100vh - 68px)'
     },
     nested: {
         paddingLeft: theme.spacing(4),
@@ -66,6 +69,10 @@ const routes = [
     {
         path: "/facilities/buildinglist",
         component: BuildingList
+    },
+    {
+        path: "/facilities/sensors",
+        component: Sensors
     }
 ]
 
@@ -113,6 +120,12 @@ export default function Dashboard() {
                                             <LocalConvenienceStoreIcon />
                                         </ListItemIcon>
                                         <ListItemText primary="Building List" />
+                                    </ListItem>
+                                    <ListItem button className={classes.nested} component={Link} to="/facilities/sensors">
+                                        <ListItemIcon>
+                                            <MemoryIcon />
+                                        </ListItemIcon>
+                                        <ListItemText primary="Sensors" />
                                     </ListItem>
                                 </List>
                             </Collapse>
