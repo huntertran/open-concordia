@@ -1,5 +1,5 @@
 export default class Api {
-    static API_BASE_URL = "https://opendata.concordia.ca/API/v1";
+    static API_BASE_URL = "https://concordia-corsproxy.azurewebsites.net/open-concordia?api=";
     static username = "";
     static key = "";
 
