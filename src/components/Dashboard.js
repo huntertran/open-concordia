@@ -78,18 +78,8 @@ export default function Dashboard() {
         setFacilitiesOpen(!facilitiesOpen);
     };
 
-    const [baseName, setBaseName] = useState("");
-
-    useEffect(() => {
-        if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-            setBaseName("");
-        } else {
-            setBaseName("/open-concordia");
-        }
-    }, [baseName])
-
     return (
-        <BrowserRouter basename={baseName}>
+        <BrowserRouter basename="/open-concordia">
             <div className={classes.root}>
                 <CssBaseline />
                 <AppBar position="fixed" className={classes.appBar}>
