@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/open-concordia/static/css/main.5f361e03.chunk.css",
-    "main.js": "/open-concordia/static/js/main.2b8e4038.chunk.js",
-    "main.js.map": "/open-concordia/static/js/main.2b8e4038.chunk.js.map",
+    "main.js": "/open-concordia/static/js/main.900e15f9.chunk.js",
+    "main.js.map": "/open-concordia/static/js/main.900e15f9.chunk.js.map",
     "runtime-main.js": "/open-concordia/static/js/runtime-main.11ab63ed.js",
     "runtime-main.js.map": "/open-concordia/static/js/runtime-main.11ab63ed.js.map",
-    "static/js/2.4114b15a.chunk.js": "/open-concordia/static/js/2.4114b15a.chunk.js",
-    "static/js/2.4114b15a.chunk.js.map": "/open-concordia/static/js/2.4114b15a.chunk.js.map",
+    "static/js/2.4faa34fa.chunk.js": "/open-concordia/static/js/2.4faa34fa.chunk.js",
+    "static/js/2.4faa34fa.chunk.js.map": "/open-concordia/static/js/2.4faa34fa.chunk.js.map",
     "index.html": "/open-concordia/index.html",
-    "precache-manifest.c431d65e3801d4e26eba98acfe748e18.js": "/open-concordia/precache-manifest.c431d65e3801d4e26eba98acfe748e18.js",
+    "precache-manifest.7e26bcaa0b4006e5ab506c320ae1c86b.js": "/open-concordia/precache-manifest.7e26bcaa0b4006e5ab506c320ae1c86b.js",
     "service-worker.js": "/open-concordia/service-worker.js",
     "static/css/main.5f361e03.chunk.css.map": "/open-concordia/static/css/main.5f361e03.chunk.css.map",
-    "static/js/2.4114b15a.chunk.js.LICENSE.txt": "/open-concordia/static/js/2.4114b15a.chunk.js.LICENSE.txt",
+    "static/js/2.4faa34fa.chunk.js.LICENSE.txt": "/open-concordia/static/js/2.4faa34fa.chunk.js.LICENSE.txt",
     "static/media/logo.svg": "/open-concordia/static/media/logo.5d5d9eef.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.11ab63ed.js",
-    "static/js/2.4114b15a.chunk.js",
+    "static/js/2.4faa34fa.chunk.js",
     "static/css/main.5f361e03.chunk.css",
-    "static/js/main.2b8e4038.chunk.js"
+    "static/js/main.900e15f9.chunk.js"
   ]
 }
