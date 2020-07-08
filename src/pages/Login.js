@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 
 import { TextField, Button, makeStyles } from '@material-ui/core'
@@ -46,6 +46,16 @@ function Login() {
     const keyChanged = (event) => {
         setKey(event.target.value);
     }
+
+    useEffect(() => {
+        let credentialExisted = API.isCredentialExisted();
+        if (credentialExisted) {
+            API.login(username, key)
+                .then((isOk) => {
+                    setLoggedIn(isOk);
+                });
+        }
+    });
 
     if (isLoggedIn) {
         return <Redirect to="/dashboard" />;
