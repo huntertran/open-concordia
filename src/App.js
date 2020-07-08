@@ -2,20 +2,19 @@ import './App.css';
 
 import React from 'react';
 import Dashboard from "./components/Dashboard";
-import Api from './context/api';
 import Login from './pages/Login';
 
+import { Route, Switch } from "react-router-dom";
+
+import PrivateRoute from './PrivateRoute';
+
 function App() {
-  const existed = Api.isCredentialExisted();
-  if (existed) {
-    return (
-      <Dashboard />
-    )
-  } else {
-    return (
-      <Login />
-    )
-  }
+  return (
+    <Switch>
+      <PrivateRoute path="/dashboard" component={Dashboard} />
+      <Route path="/login" component={Login} />
+    </Switch>
+  )
 }
 
 export default App;

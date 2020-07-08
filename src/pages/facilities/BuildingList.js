@@ -15,7 +15,7 @@ import {
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
-import SwipeableViews from 'react-swipeable-views';
+// import SwipeableViews from 'react-swipeable-views';
 
 import API from './../../context/api';
 import GoogleMapReact from 'google-map-react';
@@ -115,9 +115,9 @@ export default function BuildingList() {
         setTabPanelIndex(newValue);
     };
 
-    const handleChangeIndex = (index) => {
-        setTabPanelIndex(index);
-    };
+    // const handleChangeIndex = (index) => {
+    //     setTabPanelIndex(index);
+    // };
 
     const openInGoogleMapOnClick = (address) => {
         window.open("https://www.google.com/maps/search/?api=1&query=" + address);
@@ -169,11 +169,11 @@ export default function BuildingList() {
                             <Tab className={classes.tab} label="Loyola" {...a11yProps(1)} />
                         </Tabs>
                     </AppBar>
-                    <SwipeableViews
+                    {/* <SwipeableViews
                         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                         index={tabPanelIndex}
                         onChangeIndex={handleChangeIndex}
-                    >
+                    > */}
                         <TabPanel value={tabPanelIndex} index={0} dir={theme.direction}>
                             <List component="nav">
                                 {buildingList.map((building, index) => (
@@ -238,7 +238,7 @@ export default function BuildingList() {
                                 ))}
                             </List>
                         </TabPanel>
-                    </SwipeableViews>
+                    {/* </SwipeableViews> */}
                 </Grid>
             </Grid>
         </div>

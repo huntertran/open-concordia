@@ -3,5 +3,5 @@
         "UGRD",
         "labelledby"
     ],
-    "files.autoSave": "off"
+    "files.autoSave": "onFocusChange"
 }

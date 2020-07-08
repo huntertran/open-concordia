@@ -28,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
 function Login() {
     const classes = useStyles();
 
+    // const [redirectToReferer, setRedirectToReferer] = useState(false);
+
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [username, setUsername] = useState("");
     const [key, setKey] = useState("");
@@ -46,7 +48,7 @@ function Login() {
     }
 
     if (isLoggedIn) {
-        return <Redirect to="/" />;
+        return <Redirect to="/dashboard" />;
     }
 
     return (
