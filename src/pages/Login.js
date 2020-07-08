@@ -1,19 +1,32 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
-import logoImg from './../logo.svg'
-import { Card, Logo, Form, Input, Button, Error } from './../components/AuthForm'
+
+import { TextField, Button, makeStyles } from '@material-ui/core'
 
 import API from './../context/api';
 
-function Login() {
-    const [isLoggedIn, setLoggedIn] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+const useStyles = makeStyles(() => ({
 
-    const login = async() => {
-        let loggedIn = await API.login(username, password);
+}));
+
+function Login() {
+    const classes = useStyles();
+
+    const [isLoggedIn, setLoggedIn] = useState(false);
+    const [username, setUsername] = useState("");
+    const [key, setKey] = useState("");
+
+    const login = async () => {
+        let loggedIn = await API.login(username, key);
         setLoggedIn(loggedIn);
+    }
+
+    const usernameChanged = (event) => {
+        setUsername(event.target.value);
+    }
+
+    const keyChanged = (event) => {
+        setKey(event.target.value);
     }
 
     if (isLoggedIn) {
@@ -21,32 +34,54 @@ function Login() {
     }
 
     return (
-        <Card>
-            <Logo src={logoImg} />
-            <Form>
-                <Input
-                    type="username"
+        <div>
+            <form>
+                <TextField
+                    label="Username"
+                    type="text"
                     value={username}
-                    onChange={e => {
-                        setUsername(e.target.value);
-                    }}
-                    placeholder="email"
+                    onChange={usernameChanged}
+                    variant="outlined"
                 />
-                <Input
+                <TextField
+                    label="key"
                     type="password"
-                    value={password}
-                    onChange={e => {
-                        setPassword(e.target.value);
-                    }}
-                    placeholder="password"
+                    value={key}
+                    variant="outlined"
+                    onChange={keyChanged}
                 />
-                <Button onClick={login}>Sign In</Button>
-            </Form>
+                <Button onClick={login}>Login</Button>
+            </form>
             <a href="https://opendata.concordia.ca/admin/register.php"
                 rel="noopener noreferrer"
                 target="_blank">Don't have an account?</a>
-            {isError && <Error>The username or password provided were incorrect!</Error>}
-        </Card>
+        </div>
+        // <Card>
+        //     <Logo src={logoImg} />
+        //     <Form>
+        //         <Input
+        //             type="username"
+        //             value={username}
+        //             onChange={e => {
+        //                 setUsername(e.target.value);
+        //             }}
+        //             placeholder="email"
+        //         />
+        //         <Input
+        //             type="password"
+        //             value={key}
+        //             onChange={e => {
+        //                 setKey(e.target.value);
+        //             }}
+        //             placeholder="password"
+        //         />
+        //         <Button onClick={login}>Sign In</Button>
+        //     </Form>
+        //     <a href="https://opendata.concordia.ca/admin/register.php"
+        //         rel="noopener noreferrer"
+        //         target="_blank">Don't have an account?</a>
+        //     {isError && <Error>The username or password provided were incorrect!</Error>}
+        // </Card>
     );
 }
 

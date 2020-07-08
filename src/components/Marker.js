@@ -1,38 +1,25 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import { makeStyles } from '@material-ui/core/styles';
 
-const Wrapper = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 18px;
-  height: 18px;
-  background-color: #000;
-  border: 2px solid #fff;
-  border-radius: 100%;
-  user-select: none;
-  transform: translate(-50%, -50%);
-  cursor: ${props => (props.onClick ? 'pointer' : 'default')};
-  &:hover {
-    z-index: 1;
+const useStyles = makeStyles(() => ({
+  div: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    width: 18,
+    height: 18,
+    backgroundColor: '#000',
+    border: '2px solid #fff',
+    borderRadius: '100%',
+    userSelect: 'none',
+    transform: 'translate(-50%, -50%)',
   }
-`;
+}));
 
-const Marker = props => (
-    <Wrapper
-        alt={props.text}
-        {...props.onClick ? { onClick: props.onClick } : {}}
-    />
-);
+export default function Marker() {
+  const classes = useStyles();
 
-Marker.defaultProps = {
-    onClick: null,
+  return (
+    <div className={classes.div} />
+  )
 };
-
-Marker.propTypes = {
-    onClick: PropTypes.func,
-    text: PropTypes.string.isRequired,
-};
-
-export default Marker;
