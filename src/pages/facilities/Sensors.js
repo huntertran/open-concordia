@@ -50,16 +50,16 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function populateData(sensorName, rawData) {
+function populateData(sensorName, rawData, unitLabel) {
     let populatedData = [];
 
     for (let index = 0; index < rawData.length; index++) {
         const timedData = rawData[index];
-        populatedData.push([index, timedData[sensorName]]);
+        populatedData.push([new Date(rawData[index].Date), timedData[sensorName]]);
     }
 
     return {
-        label: "W/m2",
+        label: unitLabel,
         data: populatedData
     };
 }
@@ -67,7 +67,6 @@ function populateData(sensorName, rawData) {
 export default function Sensors() {
     const classes = useStyles();
     const [points, setPoints] = useState();
-    const [sensorReadings, setSensorReadings] = useState([]);
     const [from, setFrom] = useState(new Date());
     const [to, setTo] = useState(new Date());
     const [data, setData] = useState([]);
@@ -82,8 +81,12 @@ export default function Sensors() {
 
     const getButtonClicked = () => {
         Api.facilities_environmental(from, to).then((value) => {
-            setSensorReadings(value);
-            setData([populateData("Point_1", value)]);
+            let sensorData = []
+            for (let index = 0; index < points.length; index++) {
+                sensorData.push([populateData(points[index].Point_Identifier, value, points[index].Units)]);
+            }
+
+            setData(sensorData);
         });
     };
 
@@ -91,25 +94,9 @@ export default function Sensors() {
         Api.facilities_pointlist().then(setPoints);
     }, []);
 
-    // const data = React.useMemo(
-    //     () => [
-    //         {
-    //             label: 'Series 1',
-    //             data: [
-    //                 [0, 1],
-    //                 [1, 2],
-    //                 [2, 4],
-    //                 [3, 2],
-    //                 [4, 7],
-    //             ],
-    //         }
-    //     ],
-    //     []
-    // );
-
     const series = React.useMemo(
         () => ({
-            showPoints: false
+            showPoints: true
         }),
         []
     )
@@ -158,20 +145,24 @@ export default function Sensors() {
                 </Button>
             </form>
             <div className={classes.sensorsData}>
-                <div className={classes.sensor}>
-                    <div className={classes.sensorDetail}>
-                        <Typography>Name: MHL1-017.IC</Typography>
-                        <Typography>Description: Outdoor Temperature Sensor of EV weather station</Typography>
-                        <Typography>Building: EV</Typography>
-                        <Typography>Floor: 17M</Typography>
-                        <Typography>Meaning: Solar Irradiance</Typography>
-                        <Typography>Units: W/m2</Typography>
-                        <Typography>Sensor: Pyrometer</Typography>
+                {points && points.map((sensor, index) => (
+                    <div key={sensor.Point_Identifier} className={classes.sensor}>
+                        <div className={classes.sensorDetail}>
+                            <Typography>Name: {sensor.System_Name}</Typography>
+                            <Typography>Description: {sensor.Description}</Typography>
+                            <Typography>Building: {sensor.Building}</Typography>
+                            <Typography>Floor: {sensor.Floor}</Typography>
+                            <Typography>Meaning: {sensor.Type_of_Measurement}</Typography>
+                            <Typography>Units:{sensor.Units}</Typography>
+                            <Typography>Sensor: {sensor.Sensor_Type}</Typography>
+                        </div>
+                        <div className={classes.sensorChart}>
+                            {data[index] &&
+                                <Chart data={data[index]} axes={axes} series={series} tooltip />
+                            }
+                        </div>
                     </div>
-                    <div className={classes.sensorChart}>
-                        <Chart data={data} axes={axes} series={series} tooltip />
-                    </div>
-                </div>
+                ))}
             </div>
         </div>
     );

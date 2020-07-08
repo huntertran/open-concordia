@@ -31,8 +31,8 @@ function Login() {
     // const [redirectToReferer, setRedirectToReferer] = useState(false);
 
     const [isLoggedIn, setLoggedIn] = useState(false);
-    const [username, setUsername] = useState("");
-    const [key, setKey] = useState("");
+    const [username, setUsername] = useState(localStorage.getItem("username"));
+    const [key, setKey] = useState(localStorage.getItem("key"));
 
     const login = async () => {
         let loggedIn = await API.login(username, key);
