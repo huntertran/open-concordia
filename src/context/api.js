@@ -7,7 +7,7 @@ export default class Api {
 
     static async authenticatedFetch(url) {
         if (!this.isAuthorized) {
-            this.getExistingCredential();
+            this.isCredentialExisted();
         }
 
         let headers = new Headers();
@@ -21,7 +21,7 @@ export default class Api {
         return response;
     }
 
-    static getExistingCredential() {
+    static isCredentialExisted() {
         let username = localStorage.getItem("username");
         let key = localStorage.getItem("key");
 
@@ -29,7 +29,10 @@ export default class Api {
             && key && key !== "") {
             this.username = username;
             this.key = key;
+            return true;
         }
+
+        return false;
     };
 
     static async checkCredential() {
