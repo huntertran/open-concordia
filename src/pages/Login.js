@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 
 import { TextField, Button, makeStyles } from '@material-ui/core'
 
@@ -27,12 +27,11 @@ const useStyles = makeStyles((theme) => ({
 
 function Login() {
     const classes = useStyles();
-
-    // const [redirectToReferer, setRedirectToReferer] = useState(false);
-
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [username, setUsername] = useState(localStorage.getItem("username"));
     const [key, setKey] = useState(localStorage.getItem("key"));
+
+    const { routeUsername, routeKey } = useParams();
 
     const login = async () => {
         let loggedIn = await API.login(username, key);
@@ -51,6 +50,13 @@ function Login() {
         let credentialExisted = API.isCredentialExisted();
         if (credentialExisted) {
             API.login(username, key)
+                .then((isOk) => {
+                    setLoggedIn(isOk);
+                });
+        };
+
+        if (routeUsername !== "" && routeKey !== "") {
+            API.login(routeUsername, routeKey)
                 .then((isOk) => {
                     setLoggedIn(isOk);
                 });
