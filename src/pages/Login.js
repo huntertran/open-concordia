@@ -79,32 +79,6 @@ function Login() {
                 rel="noopener noreferrer"
                 target="_blank">Don't have an account?</a>
         </div>
-        // <Card>
-        //     <Logo src={logoImg} />
-        //     <Form>
-        //         <Input
-        //             type="username"
-        //             value={username}
-        //             onChange={e => {
-        //                 setUsername(e.target.value);
-        //             }}
-        //             placeholder="email"
-        //         />
-        //         <Input
-        //             type="password"
-        //             value={key}
-        //             onChange={e => {
-        //                 setKey(e.target.value);
-        //             }}
-        //             placeholder="password"
-        //         />
-        //         <Button onClick={login}>Sign In</Button>
-        //     </Form>
-        //     <a href="https://opendata.concordia.ca/admin/register.php"
-        //         rel="noopener noreferrer"
-        //         target="_blank">Don't have an account?</a>
-        //     {isError && <Error>The username or password provided were incorrect!</Error>}
-        // </Card>
     );
 }
 
