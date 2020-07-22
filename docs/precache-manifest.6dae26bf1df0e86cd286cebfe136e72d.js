@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "1adb270ae27126b24c6c3261f761f1da",
+    "revision": "29a883c35f7fb4f110c3490e9e437bde",
     "url": "/open-concordia/index.html"
   },
   {
-    "revision": "29cf281e8e099a04debb",
+    "revision": "b73ca0e782c55c6de4a0",
     "url": "/open-concordia/static/css/main.5f361e03.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/open-concordia/static/js/2.5028ce96.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "29cf281e8e099a04debb",
-    "url": "/open-concordia/static/js/main.2c4e6336.chunk.js"
+    "revision": "b73ca0e782c55c6de4a0",
+    "url": "/open-concordia/static/js/main.c62af8f2.chunk.js"
   },
   {
     "revision": "e01f5d30113e7bc9bc8e",

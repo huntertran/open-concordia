@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/open-concordia/static/css/main.5f361e03.chunk.css",
-    "main.js": "/open-concordia/static/js/main.2c4e6336.chunk.js",
-    "main.js.map": "/open-concordia/static/js/main.2c4e6336.chunk.js.map",
+    "main.js": "/open-concordia/static/js/main.c62af8f2.chunk.js",
+    "main.js.map": "/open-concordia/static/js/main.c62af8f2.chunk.js.map",
     "runtime-main.js": "/open-concordia/static/js/runtime-main.11ab63ed.js",
     "runtime-main.js.map": "/open-concordia/static/js/runtime-main.11ab63ed.js.map",
     "static/js/2.5028ce96.chunk.js": "/open-concordia/static/js/2.5028ce96.chunk.js",
     "static/js/2.5028ce96.chunk.js.map": "/open-concordia/static/js/2.5028ce96.chunk.js.map",
     "index.html": "/open-concordia/index.html",
-    "precache-manifest.c76150780f8e4e5dbff1c0b9a2cdf2d1.js": "/open-concordia/precache-manifest.c76150780f8e4e5dbff1c0b9a2cdf2d1.js",
+    "precache-manifest.6dae26bf1df0e86cd286cebfe136e72d.js": "/open-concordia/precache-manifest.6dae26bf1df0e86cd286cebfe136e72d.js",
     "service-worker.js": "/open-concordia/service-worker.js",
     "static/css/main.5f361e03.chunk.css.map": "/open-concordia/static/css/main.5f361e03.chunk.css.map",
     "static/js/2.5028ce96.chunk.js.LICENSE.txt": "/open-concordia/static/js/2.5028ce96.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.11ab63ed.js",
     "static/js/2.5028ce96.chunk.js",
     "static/css/main.5f361e03.chunk.css",
-    "static/js/main.2c4e6336.chunk.js"
+    "static/js/main.c62af8f2.chunk.js"
   ]
 }

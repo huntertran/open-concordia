@@ -47,13 +47,13 @@ function Login() {
     }
 
     useEffect(() => {
-        let credentialExisted = API.isCredentialExisted();
-        if (credentialExisted) {
-            API.login(username, key)
-                .then((isOk) => {
-                    setLoggedIn(isOk);
-                });
-        };
+        // let credentialExisted = API.isCredentialExisted();
+        // if (credentialExisted) {
+        //     API.login(username, key)
+        //         .then((isOk) => {
+        //             setLoggedIn(isOk);
+        //         });
+        // };
 
         if (routeUsername !== undefined && routeKey !== undefined
             && routeUsername !== "" && routeKey !== "") {
