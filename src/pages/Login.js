@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Redirect, useParams } from "react-router-dom";
 
-import { TextField, Button, makeStyles } from '@material-ui/core'
+import { TextField, Button, makeStyles } from '@material-ui/core';
+
+import queryString from 'query-string';
 
 import API from './../context/api';
 
@@ -31,7 +33,7 @@ function Login() {
     const [username, setUsername] = useState(localStorage.getItem("username"));
     const [key, setKey] = useState(localStorage.getItem("key"));
 
-    const { routeUsername, routeKey } = useParams();
+    // const { routeUsername, routeKey } = useParams();
 
     const login = async () => {
         let loggedIn = await API.login(username, key);
@@ -55,14 +57,18 @@ function Login() {
         //         });
         // };
 
-        if (routeUsername !== undefined && routeKey !== undefined
-            && routeUsername !== "" && routeKey !== "") {
-            API.login(routeUsername, routeKey)
+        const query = queryString.parse(window.location.search);
+
+        if (query.username !== undefined && query.key !== undefined
+            && query.username !== "" && query.key !== "") {
+            setUsername(query.username);
+            setKey(query.key);
+            API.login(query.username, query.key)
                 .then((isOk) => {
                     setLoggedIn(isOk);
                 });
         }
-    });
+    }, []);
 
     if (isLoggedIn) {
         return <Redirect to="/dashboard" />;
