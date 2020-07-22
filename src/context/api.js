@@ -25,8 +25,8 @@ export default class Api {
         let username = localStorage.getItem("username");
         let key = localStorage.getItem("key");
 
-        if (username && username !== ""
-            && key && key !== "") {
+        if (username && username !== "" && username !== "undefined"
+            && key && key !== "" && key !== "undefined") {
             this.username = username;
             this.key = key;
             return true;

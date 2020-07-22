@@ -55,7 +55,8 @@ function Login() {
                 });
         };
 
-        if (routeUsername !== "" && routeKey !== "") {
+        if (routeUsername !== undefined && routeKey !== undefined
+            && routeUsername !== "" && routeKey !== "") {
             API.login(routeUsername, routeKey)
                 .then((isOk) => {
                     setLoggedIn(isOk);

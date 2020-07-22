@@ -12,8 +12,8 @@ function App() {
   return (
     <Switch>
       <PrivateRoute path="/dashboard" component={Dashboard} />
-      <Route path="/login" component={Login} />
-      <Route path="/:routeUsername?/:routeKey?" exact={true} component={Login} />
+      <Route path="/login" exact={true} component={Login} />
+      <Route path="/login/:routeUsername/:routeKey" exact={true} component={Login} />
     </Switch>
   )
 }
