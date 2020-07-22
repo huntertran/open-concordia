@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/open-concordia/precache-manifest.9a414bff4ee379f971a0e5d08d9dafcd.js"
+  "/open-concordia/precache-manifest.c76150780f8e4e5dbff1c0b9a2cdf2d1.js"
 );
 
 self.addEventListener('message', (event) => {
